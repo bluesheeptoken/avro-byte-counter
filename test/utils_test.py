@@ -18,7 +18,7 @@ class UtilsTests(unittest.TestCase):
     def test_count_to_flamegraph_format(self):
         self.assertEqual(
             count_to_flamegraph_format({"A": {"B": 1, "C": 2}, "D": 3}),
-            [("A;B", 1), ("A;C", 2), ("D", 3)],
+            ["A;B 1", "A;C 2", "D 3"],
         )
 
 

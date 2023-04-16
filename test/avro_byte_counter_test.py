@@ -56,7 +56,7 @@ class AvroByteCounterRecordTest(unittest.TestCase):
                 "interests": {"array_overhead": 1, "values": 20},
                 "end_of_record": 1,
             },
-            avro_byte_counter.count_data(schema),
+            avro_byte_counter._count_data(schema),
         )
 
 
@@ -87,7 +87,7 @@ class AvroByteCounterUnionTest(unittest.TestCase):
         avro_byte_counter = prepare_bytes(datum, self.schema)
         self.assertEqual(
             {"union": {"union_branch": 1, "value": 0}, "end_of_record": 1},
-            avro_byte_counter.count_data(self.schema),
+            avro_byte_counter._count_data(self.schema),
         )
 
     def test_record_branch(self):
@@ -98,7 +98,7 @@ class AvroByteCounterUnionTest(unittest.TestCase):
                 "end_of_record": 1,
                 "union": {"union_branch": 1, "value": {"end_of_record": 1, "value": 1}},
             },
-            avro_byte_counter.count_data(self.schema),
+            avro_byte_counter._count_data(self.schema),
         )
 
 
@@ -130,7 +130,7 @@ class AvroByteCounterEnumTest(unittest.TestCase):
         avro_byte_counter = prepare_bytes(datum, self.schema)
         self.assertEqual(
             {"enumValue": 1, "end_of_record": 1},
-            avro_byte_counter.count_data(self.schema),
+            avro_byte_counter._count_data(self.schema),
         )
 
 
@@ -154,7 +154,7 @@ class AvroByteCounterArrayTest(unittest.TestCase):
         avro_byte_counter = prepare_bytes(datum, schema)
         self.assertEqual(
             {"arrayValue": {"array_overhead": 1, "values": 3}, "end_of_record": 1},
-            avro_byte_counter.count_data(schema),
+            avro_byte_counter._count_data(schema),
         )
 
     def test_array_records(self):
@@ -191,7 +191,7 @@ class AvroByteCounterArrayTest(unittest.TestCase):
                 },
                 "end_of_record": 1,
             },
-            avro_byte_counter.count_data(schema),
+            avro_byte_counter._count_data(schema),
         )
 
 
@@ -215,7 +215,7 @@ class AvroByteCounterMapTest(unittest.TestCase):
         avro_byte_counter = prepare_bytes(datum, schema)
         self.assertEqual(
             {"mapValues": {"keys": 10, "items": 14, "overhead": 2}, "end_of_record": 1},
-            avro_byte_counter.count_data(schema),
+            avro_byte_counter._count_data(schema),
         )
 
     def test_map_records(self):
@@ -251,7 +251,7 @@ class AvroByteCounterMapTest(unittest.TestCase):
                 },
                 "end_of_record": 1,
             },
-            avro_byte_counter.count_data(schema),
+            avro_byte_counter._count_data(schema),
         )
 
 
@@ -289,7 +289,7 @@ class AvroByteCounterNestedRecordsTest(unittest.TestCase):
                 },
                 "end_of_record": 1,
             },
-            avro_byte_counter.count_data(schema),
+            avro_byte_counter._count_data(schema),
         )
 
 
@@ -312,7 +312,7 @@ class AvroByteCounterFixedSchemaTest(unittest.TestCase):
         datum = {"hash": b"\x1f\xf2\x9d\xe3L\x98\xe8\xbf\xf6-\xc6\x97Q\x1e\xf6L"}
         avro_byte_counter = prepare_bytes(datum, schema)
         self.assertEqual(
-            {"hash": 16, "end_of_record": 1}, avro_byte_counter.count_data(schema)
+            {"hash": 16, "end_of_record": 1}, avro_byte_counter._count_data(schema)
         )
 
 
@@ -346,7 +346,7 @@ def test_primitive_type(field_type: str, value: object, expected_size: int):
         )
     )
     avro_byte_counter = prepare_bytes({"H": value}, schema)
-    assert {"H": expected_size, "end_of_record": 1} == avro_byte_counter.count_data(
+    assert {"H": expected_size, "end_of_record": 1} == avro_byte_counter._count_data(
         schema
     )
 

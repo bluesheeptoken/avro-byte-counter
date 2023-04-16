@@ -18,7 +18,7 @@ def merge_counts(counts: List[CountPerField]) -> CountPerField:
     return results
 
 
-def count_to_flamegraph_format(count: CountPerField) -> List[Tuple[str, int]]:
+def count_to_flamegraph_format(count: CountPerField) -> List[str]:
     def loop(count: CountPerField, pointer: List[str], results: List[Tuple[str, int]]):
         for key, value in count.items():
             pointer_with_key = pointer + [key]
@@ -28,4 +28,4 @@ def count_to_flamegraph_format(count: CountPerField) -> List[Tuple[str, int]]:
                 loop(value, pointer_with_key, results)
         return results
 
-    return loop(count, [], [])
+    return [f"{row[0]} {row[1]}" for row in loop(count, [], [])]
