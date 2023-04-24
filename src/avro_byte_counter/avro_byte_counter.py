@@ -17,11 +17,11 @@ from avro.schema import (
 
 
 class AvroByteCounter:
-    def __init__(self, raw_bytes: bytes, schema: Schema):
-        self.__decoder: BinaryDecoder = BinaryDecoder(io.BytesIO(raw_bytes))
+    def __init__(self, schema: Schema):
         self.__schema: Schema = schema
 
-    def count_byte_per_field(self) -> CountPerField:
+    def count_byte_per_field(self, raw_bytes: bytes) -> CountPerField:
+        self.__decoder = BinaryDecoder(io.BytesIO(raw_bytes))
         return self._count_data(self.__schema)  # pyright: ignore
 
     def _count_data(self, schema: Schema) -> object:
@@ -89,7 +89,6 @@ class AvroByteCounter:
                 read_bytes[field.name] = self._count_data(readers_field.type)
             else:
                 pass
-        read_bytes["end_of_record"] = 1
         return read_bytes
 
     def _count_utf8(self) -> int:
@@ -191,6 +190,7 @@ class AvroByteCounter:
             for i in range(block_count):
                 items_count.append(self._count_data(schema.items))
             (block_count_count, block_count) = self._count_and_read_long()
+            overhead_count += block_count_count
         if self._is_primitive_type(schema.items):
             items_values = sum(items_count)
         else:
