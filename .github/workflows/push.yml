@@ -47,7 +47,7 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.13.0
         env:
-          CIBW_BEFORE_BUILD: "python -m poetry self update"
+          CIBW_BEFORE_BUILD: "python -m pip install poetry"
 
       - uses: actions/upload-artifact@v3
         with:
