@@ -39,8 +39,32 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04]
-#        os: [ubuntu-20.04, windows-2019, macos-11]
+        - os: ubuntu-latest
+          python: 38
+          platform_id: manylinux_x86_64
+        - os: ubuntu-latest
+          python: 39
+          platform_id: manylinux_x86_64
+        - os: ubuntu-latest
+          python: 310
+          platform_id: manylinux_x86_64
+        - os: ubuntu-latest
+          python: 311
+          platform_id: manylinux_x86_64
+
+        # MacOS x86_64
+        - os: macos-latest
+          python: 38
+          platform_id: macosx_x86_64
+        - os: macos-latest
+          python: 39
+          platform_id: macosx_x86_64
+        - os: macos-latest
+          python: 310
+          platform_id: macosx_x86_64
+        - os: macos-latest
+          python: 311
+          platform_id: macosx_x86_64
 
     steps:
       - uses: actions/checkout@v3
@@ -48,7 +72,8 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.13.0
         env:
-          CIBW_BEFORE_BUILD: "python3 -m pip install --upgrade pip && python -m pip install poetry==1.5.1"
+          CIBW_ARCHS: all
+          CIBW_BUILD_VERBOSITY: 1
 
       - uses: actions/upload-artifact@v3
         with:
