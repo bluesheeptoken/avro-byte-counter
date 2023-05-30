@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "avro-byte-counter"
-version = "0.1.0"
+version = "0.1.1"
 description = "Count number of bytes per field"
 authors = ["Louis Fruleux <louis.fruleux1@gmail.com>"]
 license = "MIT"
