@@ -52,3 +52,4 @@ python run myscript.py | ./flamegraph.pl --countname bytes > profiles/flamegraph
 ```
 
 I gladly take feedbacks you have regarding the API, the usefulness of the project or anything :)
+
