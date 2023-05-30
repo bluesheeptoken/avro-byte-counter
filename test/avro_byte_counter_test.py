@@ -52,7 +52,7 @@ class AvroByteCounterRecordTest(unittest.TestCase):
             {
                 "userName": 7,
                 "favoriteNumber": {"union_branch": 1, "value": 2},
-                "interests": {"array_overhead": 2, "values": 20}
+                "interests": {"array_overhead": 2, "values": 20},
             },
             avro_byte_counter.count_byte_per_field(raw_bytes),
         )
@@ -183,7 +183,9 @@ class AvroByteCounterArrayTest(unittest.TestCase):
                 }
             )
         )
-        raw_bytes = prepare_bytes({"arrayValue": [{"nestedRecordValue": 1}, {"nestedRecordValue": 2}]}, schema)
+        raw_bytes = prepare_bytes(
+            {"arrayValue": [{"nestedRecordValue": 1}, {"nestedRecordValue": 2}]}, schema
+        )
         avro_byte_counter = AvroByteCounter(schema)
         self.assertEqual(
             {
@@ -213,7 +215,9 @@ class AvroByteCounterMapTest(unittest.TestCase):
                 }
             )
         )
-        raw_bytes = prepare_bytes({"mapValues": {"key1": "value1", "key2": "value2"}}, schema)
+        raw_bytes = prepare_bytes(
+            {"mapValues": {"key1": "value1", "key2": "value2"}}, schema
+        )
         avro_byte_counter = AvroByteCounter(schema)
         self.assertEqual(
             {"mapValues": {"keys": 10, "items": 14, "overhead": 2}},
@@ -243,7 +247,9 @@ class AvroByteCounterMapTest(unittest.TestCase):
                 }
             )
         )
-        raw_bytes = prepare_bytes({"mapValues": {"key1": {"value": 1}, "key2": {"value": 2}}}, schema)
+        raw_bytes = prepare_bytes(
+            {"mapValues": {"key1": {"value": 1}, "key2": {"value": 2}}}, schema
+        )
         avro_byte_counter = AvroByteCounter(schema)
         self.assertEqual(
             {
@@ -281,7 +287,9 @@ class AvroByteCounterNestedRecordsTest(unittest.TestCase):
                 }
             )
         )
-        raw_bytes = prepare_bytes({"inner_record": {"inner_value": 200, "second_inner_value": 1}}, schema)
+        raw_bytes = prepare_bytes(
+            {"inner_record": {"inner_value": 200, "second_inner_value": 1}}, schema
+        )
         avro_byte_counter = AvroByteCounter(schema)
         self.assertEqual(
             {
@@ -311,9 +319,13 @@ class AvroByteCounterFixedSchemaTest(unittest.TestCase):
                 }
             )
         )
-        raw_bytes = prepare_bytes({"hash": b"\x1f\xf2\x9d\xe3L\x98\xe8\xbf\xf6-\xc6\x97Q\x1e\xf6L"}, schema)
+        raw_bytes = prepare_bytes(
+            {"hash": b"\x1f\xf2\x9d\xe3L\x98\xe8\xbf\xf6-\xc6\x97Q\x1e\xf6L"}, schema
+        )
         avro_byte_counter = AvroByteCounter(schema)
-        self.assertEqual({"hash": 16}, avro_byte_counter.count_byte_per_field(raw_bytes))
+        self.assertEqual(
+            {"hash": 16}, avro_byte_counter.count_byte_per_field(raw_bytes)
+        )
         self.assertEqual(16, len(raw_bytes))
 
 

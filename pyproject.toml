@@ -4,16 +4,17 @@ version = "0.1.0"
 description = "Count number of bytes per field"
 authors = ["Louis Fruleux <louis.fruleux1@gmail.com>"]
 license = "MIT"
+readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.8.16"
+python = ">=3.8"
 avro = "^1.11.1"
-pyright = "^1.1.303"
 
 [tool.poetry.group.dev.dependencies]
 poethepoet = "^0.19.0"
 pytest = "^7.3.1"
 black = "^23.3.0"
+pyright = "^1.1.310"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
