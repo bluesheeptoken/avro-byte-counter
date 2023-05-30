@@ -1,4 +1,4 @@
-name: Build and upload to PyPI
+name: Test code
 
 on: pull_request
 
@@ -32,34 +32,3 @@ jobs:
       - run: poetry install --no-interaction
       - run: poetry run poe test
       - run: poetry run poe check-lint
-
-  publish:
-    needs: [test]
-    name: Build wheels, sdist and publish them
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: 3.11
-      - name: cache poetry install
-        uses: actions/cache@v3
-        with:
-          path: ~/.local
-          key: poetry-1.5.1
-      - uses: snok/install-poetry@v1
-        with:
-          version: 1.5.1
-          virtualenvs-create: true
-          virtualenvs-in-project: true
-      - name: cache deps
-        id: cache-deps
-        uses: actions/cache@v2
-        with:
-          path: .venv
-          key: pydeps-${{ hashFiles('**/poetry.lock') }}
-      - run: poetry install --no-interaction --no-root
-        if: steps.cache-deps.outputs.cache-hit != 'true'
-      - run: poetry install --no-interaction
-      - run: poetry config repositories.test-pypi https://test.pypi.org/legacy/
-      - run: poetry publish --build -u __token__ -p ${{ secrets.TOKEN_PYPI_TEST }} -r test-pypi
