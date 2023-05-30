@@ -61,4 +61,5 @@ jobs:
       - run: poetry install --no-interaction --no-root
         if: steps.cache-deps.outputs.cache-hit != 'true'
       - run: poetry install --no-interaction
+      - run: poetry config repositories.test-pypi https://test.pypi.org/legacy/
       - run: poetry publish --build -u __token__ -p ${{ secrets.TOKEN_PYPI_TEST }} -r test-pypi
