@@ -10,6 +10,9 @@ readme = "README.md"
 python = "^3.8.16"
 avro = "^1.11.1"
 
+[tool.poetry.group.dev]
+optional = true
+
 [tool.poetry.group.dev.dependencies]
 poethepoet = "^0.19.0"
 pytest = "^7.3.1"
