@@ -39,32 +39,34 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        - os: ubuntu-latest
-          python: 38
-          platform_id: manylinux_x86_64
-        - os: ubuntu-latest
-          python: 39
-          platform_id: manylinux_x86_64
-        - os: ubuntu-latest
-          python: 310
-          platform_id: manylinux_x86_64
-        - os: ubuntu-latest
-          python: 311
-          platform_id: manylinux_x86_64
+        include:
+        # Ubuntu
+          - os: ubuntu-latest
+            python: 38
+            platform_id: manylinux_x86_64
+          - os: ubuntu-latest
+            python: 39
+            platform_id: manylinux_x86_64
+          - os: ubuntu-latest
+            python: 310
+            platform_id: manylinux_x86_64
+          - os: ubuntu-latest
+            python: 311
+            platform_id: manylinux_x86_64
 
-        # MacOS x86_64
-        - os: macos-latest
-          python: 38
-          platform_id: macosx_x86_64
-        - os: macos-latest
-          python: 39
-          platform_id: macosx_x86_64
-        - os: macos-latest
-          python: 310
-          platform_id: macosx_x86_64
-        - os: macos-latest
-          python: 311
-          platform_id: macosx_x86_64
+          # MacOS x86_64
+          - os: macos-latest
+            python: 38
+            platform_id: macosx_x86_64
+          - os: macos-latest
+            python: 39
+            platform_id: macosx_x86_64
+          - os: macos-latest
+            python: 310
+            platform_id: macosx_x86_64
+          - os: macos-latest
+            python: 311
+            platform_id: macosx_x86_64
 
     steps:
       - uses: actions/checkout@v3
